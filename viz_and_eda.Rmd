@@ -145,6 +145,71 @@ weather_df %>%
 ```
 
 
+## Univariate plots 
+
+Histogram
+
+```{r}
+weather_df %>% 
+  ggplot(aes(x = tmin)) +
+  geom_histogram()
+```
+
+Adding color...
+
+```{r}
+weather_df %>% 
+  ggplot(aes(x = tmin, fill = name)) +
+  geom_histogram(position = "dodge")
+```
+
+When gets too overlappingn -- make facet grid...
+
+```{r}
+weather_df %>% 
+  ggplot(aes(x = tmin, fill = name)) +
+  geom_histogram() +
+  facet_grid(. ~ name)
+```
+
+Trying new geometry
+  - geom_density --> like a historgram that's        been smoothed out 
+  - loose some information but makes it a little     easier to compare shapes of distributions
+  - adjust = .5 gives you some more of the shapes     (but can leave as default when doing             exploration)
+
+```{r}
+weather_df %>% 
+  ggplot(aes(x = tmin, fill = name)) +
+  geom_density(alpha = .3, adjust = .5)
+```
+
+Box plots
+
+```{r}
+weather_df %>% 
+  ggplot(aes(x = name, y = tmin)) +
+  geom_boxplot()
+```
+
+Trendy plots
+
+```{r}
+weather_df %>% 
+  ggplot(aes(x = name, y = tmin, fill = name))+
+  geom_violin(alpha = .5) +
+  stat_summary(fun = "median")
+```
+
+Ridge plots -- most popular plot of 2017
+
+  - density curve for each of the 3 locations
+  - very good to use if for ex: have categorical     predictor with ~40 variables
+  - loaded ggridges package at beginning             (library(tidyverse))
 
 
+```{r}
+weather_df %>% 
+  ggplot(aes(x = tmin, y = name)) +
+  geom_density_ridges()
+```
 

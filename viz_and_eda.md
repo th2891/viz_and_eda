@@ -236,3 +236,111 @@ weather_df %>%
     ## Warning: Removed 15 rows containing missing values (geom_point).
 
 ![](viz_and_eda_files/figure-gfm/unnamed-chunk-12-1.png)<!-- -->
+
+## Univariate plots
+
+Histogram
+
+``` r
+weather_df %>% 
+  ggplot(aes(x = tmin)) +
+  geom_histogram()
+```
+
+    ## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+
+    ## Warning: Removed 15 rows containing non-finite values (stat_bin).
+
+![](viz_and_eda_files/figure-gfm/unnamed-chunk-13-1.png)<!-- -->
+
+Adding color…
+
+``` r
+weather_df %>% 
+  ggplot(aes(x = tmin, fill = name)) +
+  geom_histogram(position = "dodge")
+```
+
+    ## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+
+    ## Warning: Removed 15 rows containing non-finite values (stat_bin).
+
+![](viz_and_eda_files/figure-gfm/unnamed-chunk-14-1.png)<!-- -->
+
+When gets too overlappingn – make facet grid…
+
+``` r
+weather_df %>% 
+  ggplot(aes(x = tmin, fill = name)) +
+  geom_histogram() +
+  facet_grid(. ~ name)
+```
+
+    ## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+
+    ## Warning: Removed 15 rows containing non-finite values (stat_bin).
+
+![](viz_and_eda_files/figure-gfm/unnamed-chunk-15-1.png)<!-- -->
+
+Trying new geometry - geom\_density –&gt; like a historgram that’s been
+smoothed out - loose some information but makes it a little easier to
+compare shapes of distributions - adjust = .5 gives you some more of the
+shapes (but can leave as default when doing exploration)
+
+``` r
+weather_df %>% 
+  ggplot(aes(x = tmin, fill = name)) +
+  geom_density(alpha = .3, adjust = .5)
+```
+
+    ## Warning: Removed 15 rows containing non-finite values (stat_density).
+
+![](viz_and_eda_files/figure-gfm/unnamed-chunk-16-1.png)<!-- -->
+
+Box plots
+
+``` r
+weather_df %>% 
+  ggplot(aes(x = name, y = tmin)) +
+  geom_boxplot()
+```
+
+    ## Warning: Removed 15 rows containing non-finite values (stat_boxplot).
+
+![](viz_and_eda_files/figure-gfm/unnamed-chunk-17-1.png)<!-- -->
+
+Trendy plots
+
+``` r
+weather_df %>% 
+  ggplot(aes(x = name, y = tmin, fill = name))+
+  geom_violin(alpha = .5) +
+  stat_summary(fun = "median")
+```
+
+    ## Warning: Removed 15 rows containing non-finite values (stat_ydensity).
+
+    ## Warning: Removed 15 rows containing non-finite values (stat_summary).
+
+    ## Warning: Removed 3 rows containing missing values (geom_segment).
+
+![](viz_and_eda_files/figure-gfm/unnamed-chunk-18-1.png)<!-- -->
+
+Ridge plots – most popular plot of 2017
+
+-   density curve for each of the 3 locations
+-   very good to use if for ex: have categorical predictor with \~40
+    variables
+-   loaded ggridges package at beginning (library(tidyverse))
+
+``` r
+weather_df %>% 
+  ggplot(aes(x = tmin, y = name)) +
+  geom_density_ridges()
+```
+
+    ## Picking joint bandwidth of 1.67
+
+    ## Warning: Removed 15 rows containing non-finite values (stat_density_ridges).
+
+![](viz_and_eda_files/figure-gfm/unnamed-chunk-19-1.png)<!-- -->
