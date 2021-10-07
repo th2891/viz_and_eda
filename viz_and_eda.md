@@ -344,3 +344,38 @@ weather_df %>%
     ## Warning: Removed 15 rows containing non-finite values (stat_density_ridges).
 
 ![](viz_and_eda_files/figure-gfm/unnamed-chunk-19-1.png)<!-- -->
+
+# Save and Embed
+
+Save a scatterplot
+
+``` r
+weather_plot = 
+weather_df %>% 
+  ggplot(aes(x = tmin, y = tmax, color = name)) +
+  geom_point(alpha = 0.5)
+
+ggsave("./results/weather_plot.pdf", weather_plot, width = 8, height = 5)
+```
+
+    ## Warning: Removed 15 rows containing missing values (geom_point).
+
+What about embedding…
+
+``` r
+weather_plot
+```
+
+    ## Warning: Removed 15 rows containing missing values (geom_point).
+
+![](viz_and_eda_files/figure-gfm/unnamed-chunk-21-1.png)<!-- -->
+
+embed at different size
+
+``` r
+weather_plot
+```
+
+    ## Warning: Removed 15 rows containing missing values (geom_point).
+
+![](viz_and_eda_files/figure-gfm/unnamed-chunk-22-1.png)<!-- -->
